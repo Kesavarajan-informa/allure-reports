@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Allure Reports</title>
+    <title>Allure Reports Dashboard</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -26,14 +26,14 @@
         }
  
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 40px auto;
             padding: 0 20px;
         }
  
         .report-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
         }
  
@@ -59,10 +59,23 @@
             margin-bottom: 10px;
         }
  
-        .report-card span {
-            color: #777;
+        .report-card p {
+            margin: 4px 0;
+            color: #555;
             font-size: 0.9rem;
         }
+ 
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: white;
+            margin-right: 5px;
+        }
+ 
+        .branch { background-color: #f39c12; }
+        .browser { background-color: #27ae60; }
  
         footer {
             text-align: center;
@@ -80,7 +93,7 @@
 </head>
 <body>
     <header>
-        <h1>Allure Reports</h1>
+        <h1>Allure Reports Dashboard</h1>
     </header>
  
     <div class="container">
@@ -90,28 +103,51 @@
     </div>
  
     <footer>
-        &copy; 2025 Allure Report Dashboard
+        &copy; 2025 Allure Reports Dashboard
     </footer>
  
     <script>
         fetch('reports.json')
             .then(response => response.json())
-            .then(dates => {
+            .then(reports => {
                 const grid = document.getElementById('reportGrid');
-                dates.forEach(date => {
+                reports.forEach(report => {
                     const card = document.createElement('div');
                     card.className = 'report-card';
  
-                    const link = document.createElement('a');
-                    link.href = `reports/${date}/index.html`; // link to the report
-                    link.target = '_blank';
-                    link.textContent = `Report - ${date}`;
+                    const reportLink = document.createElement('a');
+                    // Assuming the report is at reports/<id>/index.html
+                    reportLink.href = `reports/${report.id}/index.html`;
+                    reportLink.target = '_blank';
+                    reportLink.textContent = `Report ID: ${report.id}`;
  
-                    const dateSpan = document.createElement('span');
-                    dateSpan.textContent = `Generated on: ${date}`;
+                    const projectP = document.createElement('p');
+                    projectP.textContent = `Project: ${report.project}`;
  
-                    card.appendChild(link);
-                    card.appendChild(dateSpan);
+                    const timestampP = document.createElement('p');
+                    const date = new Date(report.timestamp);
+                    timestampP.textContent = `Generated: ${date.toLocaleString()}`;
+ 
+                    const branchP = document.createElement('p');
+                    const branchBadge = document.createElement('span');
+                    branchBadge.className = 'badge branch';
+                    branchBadge.textContent = report.branch;
+                    branchP.textContent = 'Branch: ';
+                    branchP.appendChild(branchBadge);
+ 
+                    const browserP = document.createElement('p');
+                    const browserBadge = document.createElement('span');
+                    browserBadge.className = 'badge browser';
+                    browserBadge.textContent = report.browser;
+                    browserP.textContent = 'Browser: ';
+                    browserP.appendChild(browserBadge);
+ 
+                    card.appendChild(reportLink);
+                    card.appendChild(projectP);
+                    card.appendChild(timestampP);
+                    card.appendChild(branchP);
+                    card.appendChild(browserP);
+ 
                     grid.appendChild(card);
                 });
             })
@@ -122,4 +158,3 @@
     </script>
 </body>
 </html>
- 
