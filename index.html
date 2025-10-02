@@ -117,7 +117,7 @@
  
                     const reportLink = document.createElement('a');
                     // Assuming the report is at reports/<id>/index.html
-                    reportLink.href = `reports/${report.id}/index.html`;
+                    reportLink.href = `${report.id}/index.html`;
                     reportLink.target = '_blank';
                     reportLink.textContent = `Report ID: ${report.id}`;
  
@@ -158,3 +158,4 @@
     </script>
 </body>
 </html>
+
