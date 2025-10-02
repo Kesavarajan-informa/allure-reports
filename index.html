@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allure Reports</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+            margin: 0;
+            padding: 0;
+        }
+ 
+        header {
+            background-color: #4a90e2;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+ 
+        h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+ 
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+ 
+        .report-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+ 
+        .report-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+ 
+        .report-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+ 
+        .report-card a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+ 
+        .report-card span {
+            color: #777;
+            font-size: 0.9rem;
+        }
+ 
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #555;
+            font-size: 0.9rem;
+        }
+ 
+        @media (max-width: 600px) {
+            .report-card {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Allure Reports</h1>
+    </header>
+ 
+    <div class="container">
+        <div class="report-grid" id="reportGrid">
+            <!-- Report cards will be inserted here dynamically -->
+        </div>
+    </div>
+ 
+    <footer>
+        &copy; 2025 Allure Report Dashboard
+    </footer>
+ 
+    <script>
+        fetch('reports.json')
+            .then(response => response.json())
+            .then(dates => {
+                const grid = document.getElementById('reportGrid');
+                dates.forEach(date => {
+                    const card = document.createElement('div');
+                    card.className = 'report-card';
+ 
+                    const link = document.createElement('a');
+                    link.href = `reports/${date}/index.html`; // link to the report
+                    link.target = '_blank';
+                    link.textContent = `Report - ${date}`;
+ 
+                    const dateSpan = document.createElement('span');
+                    dateSpan.textContent = `Generated on: ${date}`;
+ 
+                    card.appendChild(link);
+                    card.appendChild(dateSpan);
+                    grid.appendChild(card);
+                });
+            })
+            .catch(err => {
+                console.error('Error loading reports.json:', err);
+                document.getElementById('reportGrid').innerHTML = '<p>Failed to load reports.</p>';
+            });
+    </script>
+</body>
+</html>
+ 
