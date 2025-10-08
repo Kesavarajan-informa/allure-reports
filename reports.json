@@ -12,19 +12,5 @@
     "project": "eventexp-profile-e2e",
     "branch": "main",
     "browser": "chrome"
-  },
-  {
-    "id": "18197549806",
-    "timestamp": "2025-10-02T15:23:56.718Z",
-    "project": "eventexp-profile-e2e",
-    "branch": "main",
-    "browser": "chrome"
-  },
-  {
-    "id": "18197189061",
-    "timestamp": "2025-10-02T15:10:30.051Z",
-    "project": "eventexp-profile-e2e",
-    "branch": "main",
-    "browser": "chrome"
   }
 ]
